@@ -1,0 +1,175 @@
+<!-- Login Page HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+   
+
+     body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://img.freepik.com/free-vector/realistic-style-technology-particle-background_23-2148426704.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+
+
+   .login-container {
+  background-color: rgba(255, 255, 255, 0.7); /* Background color with transparency */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+}
+
+
+    .login-container h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .login-form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+   
+    .login-form input[type="password"],
+.login-form select {
+  width: 90%; /* Expand the width to fill the container */
+  padding: 12px; /* Increase padding for better spacing */
+  border: 2px solid #ccc; /* Add a slightly thicker border */
+  border-radius: 8px; /* Round the corners */
+  margin-bottom: 15px; /* Increase margin for more separation */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+  transition: border-color 0.3s, background-color 0.3s; /* Add transition effects */
+}
+
+.login-form input[type="password"]:focus,
+.login-form select:focus {
+  border-color: #007bff; /* Change border color on focus */
+  background-color: rgba(255, 255, 255, 1); /* Change background color on focus */
+}
+
+
+    .login-form button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .login-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form class="login-form" id="loginForm">
+      <label for="dropdown-container">User Name:</label>
+      <div id="dropdown-container"></div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+<!-- Your JavaScript code to handle the login form and authentication -->
+<script>
+
+  // Fetching and processing data
+fetch(`https://sheets.googleapis.com/v4/spreadsheets/1s79v3MdAtv3ruoPac4SIuSsaAZZO3eUZKlf2Ra99XuI/values/FMSDoer!A3:B?key=AIzaSyCLRtWIXscdR1T7xCKP3ICQNW3Ncreu4ig`)
+  .then(response => response.json())
+  .then(data => {
+    const values = data.values;
+
+    // Extract unique values from the 5th column (index 4)
+    const uniqueValues = [...new Set(values.map(row => row[0]))];
+
+    // Build the dropdown dynamically
+    const dropdown = document.createElement('select');
+
+    const allOption = document.createElement('option');
+    allOption.textContent = 'ALL';
+    dropdown.appendChild(allOption);
+
+    uniqueValues.forEach(value => {
+      const option = document.createElement('option');
+      option.textContent = value;
+      dropdown.appendChild(option);
+    });
+
+    // Display the dropdown in your HTML document
+    const dropdownContainer = document.getElementById('dropdown-container');
+    dropdownContainer.appendChild(dropdown);
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
+
+  
+   
+
+
+  document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+
+    const selectedValue = document.getElementById("dropdown-container").querySelector("select").value;
+    const email = document.getElementById("dropdown-container").querySelector("select").value;
+    const password = document.getElementById("password").value;
+    
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/1s79v3MdAtv3ruoPac4SIuSsaAZZO3eUZKlf2Ra99XuI/values/FMSDoer!A3:I?key=AIzaSyCLRtWIXscdR1T7xCKP3ICQNW3Ncreu4ig`)
+  .then(response => response.json())
+  .then(data => {
+    const values = data.values;
+
+
+        // Find the corresponding row based on the selected value
+      const selectedRow = values.find(row => row[0] === selectedValue);
+
+      if (selectedRow && selectedRow[1] === password) {
+        // Assuming successful login and storing the email in local storage
+        localStorage.setItem("userEmail", selectedValue);
+      if( selectedRow[8] = 1) {
+        // Redirect the user to the dashboard page after successful login
+        window.location.href = "dashboard.html";
+        }
+      if( selectedRow[8] = 2) {
+        // Redirect the user to the dashboard page after successful login
+        window.location.href = "Dashboard_PC.html";
+        }
+
+
+      } else {
+        // Handle login failure
+        alert("Login failed Password wrong");
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching data:", error);
+    });
+});
+
+</script>
+
+</body>
+</html>
+
+
+
