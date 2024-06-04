@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        #dataTable {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto; /* Add horizontal scroll bar */
+        }
+        #dataTable th, #dataTable td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        #dataTable th {
+            background-color: #f2f2f2;
+        }
+        #dropdown {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="dropdown">
+        <label for="col7Values">Select unique values from column 7:</label>
+        <select id="col7Values">
+            <!-- Dropdown options will be inserted here -->
+        </select>
+    </div>
+    <table id="dataTable">
+        <!-- Table header will be inserted here -->
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+                <th>Column 4</th>
+                <th>Column 5</th>
+                <th>Column 6</th>
+                <th>Column 7</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            // Make sure to replace 'YOUR_SPREADSHEET_ID' with the actual ID of your Google Spreadsheet
+            var spreadsheetId = 'YOUR_SPREADSHEET_ID';
+            var range = 'Data!A:G'; // Specify the sheet and range
+
+            // Fetch the data from Google Sheets API
+            $.ajax({
+                url: `https://sheets.googleapis.com/v4/spreadsheets/1KShP1ZG7P3TAqL3t0_L52JZWphdwDdNN7uaSAdewzsA/values/Data!A1:G?key=AIzaSyDr90bqT4B4jyecF9faaFTEM8-6NhqHhPQ`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var values = data.values;
+                    if (values.length > 0) {
+                        var table = $('#dataTable');
+                        var dropdown = $('#col7Values');
+                        var uniqueValues = [];
+                        var headerRow = table.find('thead tr');
+                        $.each(values, function(index, row) {
+                            if (row[1] !== '') { // Check if column 2 is not blank
+                                var newRow = $('<tr>');
+                                $.each(row, function(index, col) {
+                                    newRow.append($('<td>').text(col));
+                                    if (index === 6 && uniqueValues.indexOf(col) === -1) {
+                                        uniqueValues.push(col);
+                                    }
+                                });
+                                table.append(newRow);
+                            }
+                        });
+                        // Populate dropdown with unique values from column 7
+                        dropdown.append($('<option>').text('All')); // Add 'All' option
+                        $.each(uniqueValues, function(index, value) {
+                            dropdown.append($('<option>').text(value));
+                        });
+                        // Add event listener to dropdown
+                        dropdown.on('change', function() {
+                            var selectedValue = $(this).val();
+                            table.find('tbody tr').each(function() {
+                                var row = $(this);
+                                var col7Value = row.find('td').eq(6).text();
+                                if (col7Value === selectedValue || selectedValue === 'All') {
+                                    row.show();
+                                } else {
+                                    row.hide();
+                                }
+                            });
+                        });
+                    } else {
+                        console.log('No data found.');
+                    }
+                },
+                error: function(xhr, textStatus, error) {
+                    console.log(xhr.statusText);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
