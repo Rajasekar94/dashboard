@@ -1,0 +1,957 @@
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <div class="container-fluid">
+    
+    
+     <div class="header-outer">
+	<div class="logimg">
+		<img style="width: 150px;" src="https://i.postimg.cc/3rGj1YLQ/new-logo-new.png" />
+	</div>
+	<div class="commpanytitle">
+		<h1>National Polyplast (India) Pvt Ltd</h1>
+		<h4 id="userEmail"></h4>
+            
+        <script>
+  // Get the email from local storage and display it on the page
+  const email = localStorage.getItem("userEmail");
+  document.getElementById("userEmail").textContent = 'Doer Dashboard - '+email;
+</script>
+
+       
+
+
+	</div>
+</div>
+
+
+    
+    
+    
+   
+    <div id="nav">
+    
+    <ul>
+  <li><a id='rst' href="Dashboard_PC.html">Home</a></li>
+  <li><a href="Dashboard_task_PC.html">FMS</a></li>
+  <li><a href="Dashboard_MIS_PC.html">MIS</a></li>  
+ 
+</ul>
+    
+    </div>
+    <div id="container">
+    
+      <div id="rgt"><br>
+      <br>
+      <div>
+      
+	  <div id="loader">
+      <img id="logo" style="width: 50px; height: 50px" src="https://i.postimg.cc/hjknvmFg/unnamed.png" alt="Logo">
+      </div>
+     
+    <div class="dropdowns-cont">
+   
+       <div id="dropdown-container"></div>
+       <div id="dropdown-container-column-4"></div>	  
+    </div>   
+
+	  <br>
+      <br>
+     
+      
+	  
+      
+
+      <div id="table-container"></div>
+    
+     
+     
+       </div>
+      </div>
+      
+    </div>
+    
+    </div>
+    
+      </body>
+      
+      <script>
+
+    // Simulate content loading delay (remove this in the actual implementation)
+    setTimeout(function () {
+      // Hide the loader and display the content
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    }, 2000); // Change the delay time as needed (in milliseconds)
+
+
+  function filterTable(selectedValue) {
+  const table = document.getElementById('table-container');
+  const rows = table.getElementsByTagName('tr');
+
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const categoryCell = row.cells[0]; // Assuming category is in the first column (cell index 0)
+
+    if (selectedValue === 'ALL' || categoryCell.textContent === selectedValue) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  }
+}
+
+
+  function filterTable1(selectedValue) {
+  const table = document.getElementById('table-container');
+  const rows = table.getElementsByTagName('tr');
+
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const categoryCell = row.cells[2]; // Assuming category is in the first column (cell index 0)
+
+    if (selectedValue === 'ALL' || categoryCell.textContent === selectedValue) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  }
+}
+
+
+
+fetch(`https://sheets.googleapis.com/v4/spreadsheets/1h1j3o7Tn82fIAwV7vRNRjRFPY2ETVr0NHCO0iweQ-wE/values/Sheet1!A:K?key=AIzaSyCLRtWIXscdR1T7xCKP3ICQNW3Ncreu4ig`)
+  .then(response => response.json())
+  .then(data => {
+    const values = data.values;
+
+       const headers = values[0]; // Get the first row as headers
+   
+    const filteredData = values.filter(rowData => {
+        // Change "categoryIndex" to the actual index of the "category" column (zero-based)
+        const categoryIndex = 3; // Assuming category is in the 4th column (zero-based index)
+        const categoryValueToFilter = localStorage.getItem("userEmail"); // Change this to the category value you want to filter
+
+        // Filter the data based on the desired category value
+        return rowData[categoryIndex] === categoryValueToFilter;
+      });     
+
+    // Extract unique values from the first column
+    const uniqueValues = [...new Set(filteredData.map(rowData => rowData[10]))];
+     
+        // Build the dropdown dynamically
+    const dropdown = document.createElement('select');
+
+   const allOption = document.createElement('option');
+   allOption.textContent = 'ALL';
+   dropdown.appendChild(allOption);
+
+
+    uniqueValues.forEach(value => {
+      const option = document.createElement('option');
+      option.textContent = value;
+      dropdown.appendChild(option);
+    });
+
+    // Display the dropdown in your HTML document
+    const dropdownContainer = document.getElementById('dropdown-container');
+    dropdownContainer.appendChild(dropdown);
+    
+    dropdown.addEventListener('change', () => {
+  const selectedValue = dropdown.value; // Get the selected value
+  
+  filterTable(selectedValue); // Call the filtering function with the selected value
+}); 
+  
+   
+ // After getting values from Google Sheets and filtering data
+
+// Extract unique values from the fourth column
+const uniqueValuesColumn4 = [...new Set(filteredData.map(rowData => rowData[1]))];
+
+// Build the dropdown dynamically for the second column
+const dropdownColumn4 = document.createElement('select');
+
+const allOptionColumn4 = document.createElement('option');
+allOptionColumn4.textContent = 'ALL';
+dropdownColumn4.appendChild(allOptionColumn4);
+
+uniqueValuesColumn4.forEach(value => {
+  const option = document.createElement('option');
+  option.textContent = value;
+  dropdownColumn4.appendChild(option);
+});
+
+// Display the second dropdown in your HTML document
+const dropdownContainerColumn4 = document.getElementById('dropdown-container-column-4');
+dropdownContainerColumn4.appendChild(dropdownColumn4);
+
+dropdownColumn4.addEventListener('change', () => {
+  const selectedValueColumn4 = dropdownColumn4.value; // Get the selected value
+
+  filterTable1(selectedValueColumn4); // Call the filtering function for column 4
+});
+
+
+
+
+
+   // Build the HTML table dynamically
+    const table = document.createElement('table');
+
+    const headerRow = document.createElement('tr');
+
+  // Add header cells for each column
+  const headerCells = ['File Name', 'Entry Number', 'Task', 'Description', 'Location', 'Planned Date', 'Delay Hrs', 'Attachment', 'Link'];
+  headerCells.forEach((headerText) => {
+    const headerCell = document.createElement('th');
+    headerCell.textContent = headerText;
+    headerRow.appendChild(headerCell);
+  });
+
+  // Append the header row to the table
+  table.appendChild(headerRow);
+
+    
+
+    filteredData.forEach(rowData => {
+      const row = document.createElement('tr');
+
+     // First Column (Dropdown)
+      const firstCell = document.createElement('td');
+      firstCell.textContent = rowData[10];
+      row.appendChild(firstCell);
+
+      const secondCell = document.createElement('td');
+      secondCell.textContent = rowData[2];
+      row.appendChild(secondCell);
+	  
+	  const fifthCell = document.createElement('td');
+      fifthCell.textContent = rowData[1];
+      row.appendChild(fifthCell);
+
+      const fourthCell = document.createElement('td');
+      fourthCell.textContent = rowData[7];
+      row.appendChild(fourthCell);
+      
+      const sixthCell = document.createElement('td');
+      sixthCell.textContent = rowData[9];
+      row.appendChild(sixthCell);
+	  
+	  const seventhCell = document.createElement('td');
+      seventhCell.textContent = rowData[4];
+      row.appendChild(seventhCell);
+	  
+	  const eighthCell = document.createElement('td');
+      eighthCell.textContent = rowData[6];
+      row.appendChild(eighthCell);
+	  
+	  const ninethCell = document.createElement('td');
+      if (rowData[8]) { // Check if the third column data is not blank
+      const button = document.createElement('button');
+      const link = document.createElement('a');
+      link.href = rowData[8]; // Assuming the URL is in the third column
+      link.target = '_blank'; // Open the link in a new tab
+      link.textContent = 'Click here';
+      ninethCell.appendChild(link);
+       }
+
+       row.appendChild(ninethCell);
+       table.appendChild(row);
+       
+	   
+      // Third Column with Button and Hyperlink
+      const thirdCell = document.createElement('td');
+      if (rowData[5]) { // Check if the third column data is not blank
+      const button = document.createElement('button');
+	  	 // Apply CSS styles using the style property
+        button.style.backgroundColor = '#4ABBE8';
+        button.style.color = 'white';
+        button.style.padding = '4px 10px';
+        button.style.border = 'none';
+        button.style.cursor = 'pointer';
+        button.textContent = 'Submit'; // Text for the button
+      const link = document.createElement('a');
+      link.href = rowData[5]; // Assuming the URL is in the third column
+      link.target = '_blank'; // Open the link in a new tab
+      link.appendChild(button);
+      thirdCell.appendChild(link);
+      }
+      
+	 
+      row.appendChild(thirdCell);
+      table.appendChild(row);
+	  
+	  
+	  
+	  
+    });
+  
+   
+
+    // Display the table in your HTML document
+    const tableContainer = document.getElementById('table-container');
+    tableContainer.appendChild(table);
+
+  })
+
+  .catch(error => {
+    console.error('Error retrieving data from Google Sheets API:', error);
+  });
+  
+</script>
+ 
+<style>
+
+
+/* Styles for the loader */
+    #loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f1f1f1;
+    }
+
+    #logo {
+      width: 100px; /* Adjust the width of your logo */
+      height: 100px; /* Adjust the height of your logo */
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Styles to hide the loader when content is loaded */
+    #content {
+      display: none;
+    }
+
+*{
+margin:0px;
+padding:0px;
+}
+html{
+background:White;
+}
+body{
+background:White;
+height:2000px;
+margin:10px auto;
+width:100%;
+}
+#header{
+background:#123;
+height:40px;
+width:100%;
+}
+#nav{
+background:#006080;
+height:30px;
+width:100%;
+text-align: Center;
+}
+
+#container{
+background:#231;
+height:1820px;
+width:100%;
+}
+
+#footer{
+background:#B0D5DD;
+height:30px;
+width:100%;
+}
+#rgt{
+background:#E8E3D3;
+height:100%;
+float:right;
+width:100%
+
+}
+#myForm{
+width:70%;
+margin: Auto;
+color: white;
+padding: 10px;
+font-size: 8px;
+
+}
+
+h1{
+color: white;
+text-align: center;
+font-size: 35px;
+}
+
+
+h4{
+color: white;
+text-align: center;
+font-size: 20px;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 4px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: white;
+}
+
+//expense data
+
+#table-container {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 0.5px;
+  text-align: Center;
+  margin: Auto;
+  width:98%;
+  font-size: 15px;
+  
+}
+
+#table-container td, #table-container th {
+  border: 1px solid #0E2E1F;
+  padding: 1px;
+  text-align: Center;
+}
+
+#table-container tr:nth-child(even){background-color: #f2f2f2;}
+
+#table-container tr:hover {background-color: #ddd;}
+
+#table-container th {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: Center;
+  background-color: #5F9EA0;
+  color: white;
+}
+
+#ref{
+  border: None;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 30px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:right;
+  
+}
+
+#ref a{
+
+color: white;
+
+}
+
+input {
+  width: 100%;
+  height:40px;
+}
+
+#rgt {
+overflow: auto;
+}
+
+
+//update
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  font-size: 15px;
+  height: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#button{
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 10px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:center;
+}
+
+#mydel{
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px -1px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:center;
+
+}
+
+
+.btn {
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 10px;
+  cursor: pointer;
+  background-color: #4ABBE8;
+  float:center;
+
+
+
+}
+
+#dropdown-container-column-4 {
+
+margin: 1px 10px;
+width: 5%;
+
+
+}
+
+.dropdowns-cont {
+  display: flex;
+  align-items: center; /* Align vertically centered */
+  margin: 1px 10px;
+}
+
+#dropdown {
+
+background-color: #2E86C1;
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin-left: 30px;
+  text-align: left;
+  width: 12%;
+}
+
+
+.header-outer{
+	background: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	padding: 10px 0px;
+}
+
+.logimg{
+	display:flex;
+	    width: 30%;
+    padding-left: 30px;
+}
+
+.commpanytitle{
+display:flex;
+align-items: center;
+    justify-content: center;
+	    flex-direction: column;
+}
+
+.commpanytitle h1, .commpanytitle h4{
+	margin:0px;
+
+}
+
+
+
+
+
+//media
+
+/* On screens that are 992px wide or less, the background color is blue */
+@media screen and (max-width: 992px) {
+  body {
+    width:100%;
+    height:1200px;
+  }
+  
+  #header{
+background:#123;
+height:50px;
+width:100%;
+}
+#nav{
+background:#006080;
+height:60px;
+width:100%;
+text-align: Center;
+}
+
+#container{
+background:#231;
+height:1600px;
+width:100%;
+}
+
+#rgt{
+background:#E8E3D3;
+height:200%;
+float:right;
+width:100%
+
+}
+
+#footer{
+background:#B0D5DD;
+height:30px;
+width:100%;
+text-align: Center;
+}
+
+
+#myForm{
+width:95%;
+margin: Auto;
+color: white;
+padding: 20px;
+font-size: 25px;
+
+}
+
+h1{
+color: white;
+text-align: center;
+font-size: 40px;
+margin: Auto;
+}
+
+
+h4{
+color: white;
+text-align: center;
+font-size: 25px;
+margin: Auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 30px;
+}
+
+li a:hover {
+  background-color: white;
+}
+
+#rgt {
+overflow: auto;
+}
+
+//expense data
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 1px;
+  text-align: Center;
+  margin: Auto;
+  width:98%;
+  font-size: 15px;
+}
+
+#customers td, #customers th {
+  border: 1px solid #0E2E1F;
+  padding: 2px;
+  text-align: Center;
+  font-size: 15px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: Center;
+  background-color: #5F9EA0;
+  color: white;
+  font-size: 20px;
+}
+
+#ref{
+  border: None;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 30px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:right;
+  font-size: 20px;
+  
+}
+
+input {
+  width: 100%;
+  height:80px;
+}
+
+//update
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  font-size: 20px;
+  height: 60%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#myBtn{
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 10px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:center;
+}
+
+#mydel{
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px -1px;
+  cursor: pointer;
+  background-color: #5F9EA0;
+  float:center;
+
+}
+
+.btn {
+
+border: None;
+  color: white;
+  padding: 2px 4px;
+  text-align: center;
+  
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 10px;
+  cursor: pointer;
+  background-color: #4ABBE8;
+  float:center;
+
+
+
+}
+
+.cl_country,.cl_age {
+
+background-color: #2E86C1;
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: 30px;
+  text-align: left;
+
+}
+
+
+.header-outer{
+	background: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	padding: 10px 0px;
+}
+
+.logimg{
+	display:flex;
+	    width: 30%;
+    padding-left: 30px;
+}
+
+.commpanytitle{
+display:flex;
+align-items: center;
+    justify-content: center;
+	    flex-direction: column;
+}
+
+.commpanytitle h1, .commpanytitle h4{
+	margin:0px;
+
+}
+
+.dropdowns-cont {
+  display: flex;
+  align-items: center; /* Align vertically centered */
+  padding: 10px;
+}
+
+
+  
+}
+
+/* On screens that are 600px wide or less, the background color is olive */
+@media screen and (max-width: 600px) {
+  body {
+    
+    width:100%;
+  }
+  
+}
+
+
+
+
+</style>
+
+ 
+</html>
+
+
