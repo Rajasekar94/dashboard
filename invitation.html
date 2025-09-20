@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wedding Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      color: #333;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 64px;
+      color: #c0392b;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .subtitle {
+      font-size: 22px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .profiles {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+
+    .profile {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      width: 250px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+    }
+
+    .profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ff9f43;
+    }
+
+    .profile h2 {
+      margin: 15px 0 5px;
+      font-size: 24px;
+      color: #e67e22;
+    }
+
+    .profile p {
+      font-size: 16px;
+      color: #777;
+    }
+
+    .calendar {
+      margin: 0 auto 40px;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      animation: slideUp 1.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .calendar-header {
+      font-size: 26px;
+      color: #8e44ad;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .calendar-day, .calendar-date {
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .calendar-day {
+      background: #f1f1f1;
+      color: #444;
+    }
+
+    .calendar-date {
+      background: #fff7e6;
+      color: #555;
+    }
+
+    .highlight {
+      background: #e67e22 !important;
+      color: #fff !important;
+      font-weight: bold;
+      transform: scale(1.2);
+      animation: glow 1.5s infinite;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.7); }
+      70% { box-shadow: 0 0 0 12px rgba(230, 126, 34, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0); }
+    }
+
+    footer {
+      font-size: 20px;
+      margin-top: 30px;
+      color: #2c3e50;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .emoji {
+      font-size: 26px;
+      animation: pop 2s infinite;
+    }
+
+    @keyframes pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💍 You're Invited 💖</h1>
+    <p class="subtitle">Join us in the celebration of love, laughter, and happily ever after!</p>
+
+    <div class="profiles">
+      <!-- Groom First -->
+      <div class="profile">
+        <img src="https://i.postimg.cc/wjfm73XM/Whats-App-Image-2025-09-20-at-13-56-43.jpg" alt="Groom" />
+        <h2>Rajasekar Krishnamoorthy</h2>
+        <p>Groom 👔</p>
+      </div>
+
+      <!-- Bride -->
+      <div class="profile">
+        <img src="https://i.postimg.cc/c1wwXxSk/Whats-App-Image-2025-09-20-at-13-56-42.jpg" alt="Bride" />
+        <h2>Thilaga</h2>
+        <p>Bride 👑</p>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="calendar">
+      <div class="calendar-header">🗓 November 2025</div>
+      <div class="calendar-grid">
+        <div class="calendar-day">Sun</div>
+        <div class="calendar-day">Mon</div>
+        <div class="calendar-day">Tue</div>
+        <div class="calendar-day">Wed</div>
+        <div class="calendar-day">Thu</div>
+        <div class="calendar-day">Fri</div>
+        <div class="calendar-day">Sat</div>
+
+        <!-- November 2025 starts on Saturday -->
+        <div class="calendar-date"></div>
+        <div class="calendar-date"></div>
+        <div class="calendar-date"></div>
+        <div class="calendar-date"></div>
+        <div class="calendar-date"></div>
+        <div class="calendar-date"></div>
+        <div class="calendar-date">1</div>
+
+        <div class="calendar-date">2</div>
+        <div class="calendar-date">3</div>
+        <div class="calendar-date">4</div>
+        <div class="calendar-date">5</div>
+        <div class="calendar-date">6</div>
+        <div class="calendar-date">7</div>
+        <div class="calendar-date">8</div>
+
+        <div class="calendar-date">9</div>
+        <div class="calendar-date">10</div>
+        <div class="calendar-date">11</div>
+        <div class="calendar-date">12</div>
+        <div class="calendar-date">13</div>
+        <div class="calendar-date">14</div>
+        <div class="calendar-date">15</div>
+
+        <div class="calendar-date">16</div>
+        <div class="calendar-date">17</div>
+        <div class="calendar-date">18</div>
+        <div class="calendar-date">19</div>
+        <div class="calendar-date">20</div>
+        <div class="calendar-date">21</div>
+        <div class="calendar-date">22</div>
+
+        <div class="calendar-date">23</div>
+        <div class="calendar-date">24</div>
+        <div class="calendar-date">25</div>
+        <div class="calendar-date">26</div>
+        <div class="calendar-date">27</div>
+        <div class="calendar-date">28</div>
+        <div class="calendar-date">29</div>
+
+        <div class="calendar-date highlight">30 🎉</div>
+      </div>
+    </div>
+
+    <footer>
+      💕 We can't wait to celebrate with you! <br />
+      📅 Save the date: <strong>30th November 2025</strong> <span class="emoji">💐</span>
+    </footer>
+  </div>
+</body>
+</html>
