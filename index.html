@@ -99,7 +99,7 @@ fetch(`https://sheets.googleapis.com/v4/spreadsheets/1N3oNHhBEXU0YhJkZ3xHcW9nO-v
     const values = data.values;
 
     // Extract unique values from the 5th column (index 4)
-    const uniqueValues = [...new Set(values.map(row => row[8]))];
+    const uniqueValues = [...new Set(values.map(row => row[2]))];
 
     // Build the dropdown dynamically
     const dropdown = document.createElement('select');
