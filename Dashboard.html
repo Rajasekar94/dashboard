@@ -16,7 +16,7 @@
     
      <div class="header-outer">
 	<div class="logimg">
-		<img style="width: 150px;" src="https://i.postimg.cc/3rGj1YLQ/new-logo-new.png" />
+		<img style="width: 100px; height : 35px" src="https://i.postimg.cc/prLGBsGq/images-roll.jpg" />
 	</div>
 	<div class="commpanytitle">
 		<h1>Roll baby roll</h1>
@@ -42,10 +42,9 @@
     <div id="nav">
     
     <ul>
-  <li><a id='rst' href="Dashboard_PC.html"></a></li>
-  <li><a href="Dashboard_task_PC.html">FMS</a></li>
-  <li><a href="Dashboard_MIS_PC.html">MIS</a></li>
   
+  <li><a href="Dashboard_task_PC.html">FMS</a></li>
+  <li><a href="Dashboard_MIS_PC.html">MIS</a></li>  
  
 </ul>
     
@@ -140,7 +139,7 @@ fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kZa6Ny2Htb36oqZdhR6LcbLnxa
    
     const filteredData = values.filter(rowData => {
         // Change "categoryIndex" to the actual index of the "category" column (zero-based)
-        const categoryIndex = 12; // Assuming category is in the 4th column (zero-based index)
+        const categoryIndex = 3; // Assuming category is in the 4th column (zero-based index)
         const categoryValueToFilter = localStorage.getItem("userEmail"); // Change this to the category value you want to filter
 
         // Filter the data based on the desired category value
@@ -152,10 +151,6 @@ fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kZa6Ny2Htb36oqZdhR6LcbLnxa
      
         // Build the dropdown dynamically
     const dropdown = document.createElement('select');
-
-   // Apply styles to the dropdown
-   dropdown.style.width = '300px'; // Adjust the width as needed
-   
 
    const allOption = document.createElement('option');
    allOption.textContent = 'ALL';
@@ -187,11 +182,6 @@ const uniqueValuesColumn4 = [...new Set(filteredData.map(rowData => rowData[1]))
 // Build the dropdown dynamically for the second column
 const dropdownColumn4 = document.createElement('select');
 
-// Apply styles to the dropdown
-   dropdownColumn4.style.width = '300px'; // Adjust the width as needed
-   
-
-
 const allOptionColumn4 = document.createElement('option');
 allOptionColumn4.textContent = 'ALL';
 dropdownColumn4.appendChild(allOptionColumn4);
@@ -218,8 +208,7 @@ dropdownColumn4.addEventListener('change', () => {
 
    // Build the HTML table dynamically
     const table = document.createElement('table');
-   
-  
+
     const headerRow = document.createElement('tr');
 
   // Add header cells for each column
@@ -283,7 +272,7 @@ dropdownColumn4.addEventListener('change', () => {
 	   
       // Third Column with Button and Hyperlink
       const thirdCell = document.createElement('td');
-      if (rowData[11]) { // Check if the third column data is not blank
+      if (rowData[5]) { // Check if the third column data is not blank
       const button = document.createElement('button');
 	  	 // Apply CSS styles using the style property
         button.style.backgroundColor = '#4ABBE8';
@@ -293,7 +282,7 @@ dropdownColumn4.addEventListener('change', () => {
         button.style.cursor = 'pointer';
         button.textContent = 'Submit'; // Text for the button
       const link = document.createElement('a');
-      link.href = rowData[11]; // Assuming the URL is in the third column
+      link.href = rowData[5]; // Assuming the URL is in the third column
       link.target = '_blank'; // Open the link in a new tab
       link.appendChild(button);
       thirdCell.appendChild(link);
@@ -323,17 +312,6 @@ dropdownColumn4.addEventListener('change', () => {
 </script>
  
 <style>
-
-/* CSS */
-#table-container {
-  width: 80%; /* Set the container width to 100% */
-  
-}
-
-#table-container table {
-  width: 30%; /* Make the table width 100% of the container */
-  
-}
 
 
 /* Styles for the loader */
@@ -666,8 +644,6 @@ align-items: center;
 
 
 
-
-
 //media
 
 /* On screens that are 992px wide or less, the background color is blue */
@@ -977,4 +953,5 @@ align-items: center;
 
  
 </html>
+
 
