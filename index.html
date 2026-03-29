@@ -146,14 +146,13 @@ fetch(`https://sheets.googleapis.com/v4/spreadsheets/1N3oNHhBEXU0YhJkZ3xHcW9nO-v
       if (selectedRow && selectedRow[7] === password) {
         // Assuming successful login and storing the email in local storage
         localStorage.setItem("userEmail", selectedValue);
-      if( selectedRow[8] = 1) {
-        // Redirect the user to the dashboard page after successful login
-        window.location.href = "dashboard.html";
-        }
-      if( selectedRow[8] = 2) {
-        // Redirect the user to the dashboard page after successful login
-        window.location.href = "Dashboard_PC.html";
-        }
+
+alert (selectedRow[8])
+     if (Number(selectedRow[8]) === 1) {
+  window.location.href = "dashboard.html";
+} else if (Number(selectedRow[8]) === 2) {
+  window.location.href = "Dashboard_PC.html";
+}
 
 
       } else {
